@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 
 import com.example.entity.Reward;
 import com.example.entity.Transaction;
+import com.example.exception.ClientIdNotFoundExcpetion;
+import com.example.exception.MonthNotFoundException;
 import com.example.repository.RewardRepository;
 import com.example.repository.TransactionRepository;
 import com.example.service.RewardService;
@@ -82,6 +84,11 @@ public class RewardServiceImpl implements RewardService {
 		 for (int i = 0; i < MoneySpentlist.size(); i++)
 			 moneySpentSum += MoneySpentlist.get(i);
 	 reward.setDollarSpent(moneySpentSum);
+	 
+	 if(reward==null)
+	 {
+		 throw new ClientIdNotFoundExcpetion("id :"+id+"is not found");
+	 }
 		
 		return reward;
 	}
@@ -119,6 +126,10 @@ public class RewardServiceImpl implements RewardService {
 			 moneySpentSum += MoneySpentlist.get(i);
 	 reward.setDollarSpent(moneySpentSum);
 		
+	 	if(reward==null)
+	 	{
+	 		throw new MonthNotFoundException("Month :"+month+"is not found");
+	 	}
 		return reward;
 	}
 }
